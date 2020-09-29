@@ -8,7 +8,7 @@ const FilterCard: React.FC = () => {
   const [ questionsNumber, setQuestionsNumber ] = useState(5);
 
   return (
-    <Card cardTitle='Dá um quizze!'>
+    <Card cardTitle='Dá um quizze!' style={{ flex: '0 0 28%', margin: '0 1rem 1rem 0' }}>
       <input 
         type="text" 
         className="custominput large block" 
@@ -29,7 +29,7 @@ const FilterCard: React.FC = () => {
           min="1"
           max="20"
           value={questionsNumber}
-          onInput={e => setQuestionsNumber(Number(e.currentTarget.value))}
+          onChange={e => setQuestionsNumber(Number(e.currentTarget.value))}
         />
       </div>
 

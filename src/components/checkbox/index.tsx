@@ -1,30 +1,36 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import React, { InputHTMLAttributes, useState } from 'react';
+import React, { forwardRef, InputHTMLAttributes, useCallback, useState } from 'react';
 import { CheckBoxChecked, CheckBoxContainer, CheckBoxFakeLabel, CheckBoxInput, CheckBoxLabel } from './style';
 
 interface CheckBoxProps extends InputHTMLAttributes<HTMLInputElement> {
   text: string;
 }
 
-const CheckBox: React.FC<CheckBoxProps> = ({ name, checked, text }) => {
+const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> = ({ name, text }, ref) => {
+  const [checkChecked, setCheckChecked] = useState(false);
+
   const tickVariants = {
     checked: { pathLength: 1 },
     unchecked: { pathLength: 0 }
   };
-
-  const [checkChecked, setCheckChecked] = useState(checked);
   const pathLength = useMotionValue(0);
   const opacity = useTransform(pathLength, [0.05, 0.15], [0, 1]);
 
+  const handleCheckChange = useCallback<(e: React.ChangeEvent<HTMLInputElement>) => void>((e) => {
+    setCheckChecked(e.currentTarget.checked);
+  }, []);
+
   return (
     <div className='form-group'>
-      <CheckBoxContainer onClick={() => setCheckChecked(!checkChecked)}>
-        <CheckBoxInput name={name} id={name} checked={checked}/>
+      <CheckBoxContainer>
+        <CheckBoxInput name={name} id={name} checked={checkChecked}
+          onChange={handleCheckChange} ref={ref}
+        />
         <CheckBoxFakeLabel htmlFor={name}/>
         <CheckBoxChecked
           animate={checkChecked ? "checked" : "unchecked"}
           viewBox='0 0 15 15'
-          visibility={checkChecked ? 'visible' : 'hidden'}
+          style={{ zIndex: 0 }}
         >
           <motion.path
             d="M 1.091 7.499 5.916 12.326 13.909 2.674"
@@ -44,4 +50,4 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, checked, text }) => {
   );
 }
 
-export default CheckBox;
+export default forwardRef(CheckBox);
