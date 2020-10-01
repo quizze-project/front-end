@@ -86,7 +86,7 @@ export default createGlobalStyle`
     }
 
     .bg-black {
-        background-color: var(--green);
+        background-color: var(--black);
     }
 
     .bg-gray {
@@ -102,6 +102,10 @@ export default createGlobalStyle`
         font-size: 0.85rem;
         border-radius: 4px;
         max-width: 100%;
+    }
+
+    a.btn {
+        padding: 11px 16px;
     }
 
     .large {
@@ -122,6 +126,7 @@ export default createGlobalStyle`
         text-align: center;
         color: white;
         font-weight: 600;
+        text-decoration: none;
     }
 
     .custominput {
@@ -129,8 +134,16 @@ export default createGlobalStyle`
         color: rgba(0, 0, 0, 0.5);
     }
 
-    .form-group {
+    .center-align {
         display: flex;
         align-items: center;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .form-group label {
+        font-weight: 600;
     }
 `;

@@ -1,12 +1,12 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import React, { forwardRef, InputHTMLAttributes, useCallback, useState } from 'react';
+import React, { InputHTMLAttributes, useCallback, useState } from 'react';
 import { CheckBoxChecked, CheckBoxContainer, CheckBoxFakeLabel, CheckBoxInput, CheckBoxLabel } from './style';
 
 interface CheckBoxProps extends InputHTMLAttributes<HTMLInputElement> {
   text: string;
 }
 
-const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> = ({ name, text }, ref) => {
+const CheckBox: React.FC<CheckBoxProps> = ({ name, text }) => {
   const [checkChecked, setCheckChecked] = useState(false);
 
   const tickVariants = {
@@ -21,10 +21,10 @@ const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> 
   }, []);
 
   return (
-    <div className='form-group'>
+    <div className='center-align'>
       <CheckBoxContainer>
         <CheckBoxInput name={name} id={name} checked={checkChecked}
-          onChange={handleCheckChange} ref={ref}
+          onChange={handleCheckChange}
         />
         <CheckBoxFakeLabel htmlFor={name}/>
         <CheckBoxChecked
@@ -50,4 +50,4 @@ const CheckBox: React.ForwardRefRenderFunction<HTMLInputElement, CheckBoxProps> 
   );
 }
 
-export default forwardRef(CheckBox);
+export default CheckBox;

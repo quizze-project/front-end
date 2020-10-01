@@ -1,10 +1,11 @@
-import { motion } from 'framer-motion';
 import React from 'react';
+
+import { motion } from 'framer-motion';
 import Card from '../../components/card';
 import Quizze from '../../components/quizze';
 import { QuizzesContainer } from '../../styles/Containers';
 
-const Index: React.FC = () => {
+const MeusQuizzes: React.FC = () => {
   const container = {
     visible: {
       transition: {
@@ -19,19 +20,20 @@ const Index: React.FC = () => {
   };
 
   return (
-    <Card cardTitle='Quizzes disponíveis'>
+    <Card cardTitle='Seus quizzes'>
       <QuizzesContainer
         variants={container}
         initial="initial"
         animate="visible"
       >
         {
-          [0, 1, 2, 3, 4].map(number =>
+          [0, 1].map(number =>
             <motion.div key={number} variants={quizze}>
               <Quizze
                 title='O quanto você sabe sobre programação?'
                 description='In code we trust!'
                 imageUrl='http://getwallpapers.com/wallpaper/full/1/c/f/145265.jpg'
+                owner={true}
               />
             </motion.div>
           )
@@ -41,4 +43,4 @@ const Index: React.FC = () => {
   );
 }
 
-export default Index;
+export default MeusQuizzes;

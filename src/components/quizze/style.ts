@@ -47,3 +47,13 @@ export const QuizzeDescription = styled.p`
   margin: 0;
   opacity: 0.5;
 `;
+
+export const QuizzeOptions = styled(QuizzeInformation)`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+  }
+`;

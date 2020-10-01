@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-import Card from '../card';
-import CheckBox from '../checkbox';
-import Range from '../range';
+import Card from '../../components/card';
+import CheckBox from '../../components/checkbox';
+import Range from '../../components/range';
 
 const FilterCard: React.FC = () => {
   const [ questionsNumber, setQuestionsNumber ] = useState(5);
 
   return (
-    <Card cardTitle='Dá um quizze!' style={{ flex: '0 0 28%', margin: '0 1rem 1rem 0' }}>
+    <Card cardTitle='Dá um quizze!' style={{ marginBottom: '10px' }}>
       <input 
         type="text" 
         className="custominput large block" 

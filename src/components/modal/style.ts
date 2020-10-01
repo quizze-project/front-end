@@ -7,15 +7,22 @@ interface ModalHeaderProps {
 
 export const ModalContainer = styled.div`
   position: absolute;
+  /* display: flex;
+  align-items: flex-start;
+  justify-content: center; */
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100%;
-  padding: 4% 10%;
+  height: 100%;
   overflow-y: auto;
+  padding: 0 10%;
 
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 999;
+
+  @media (max-width: 1024px) {
+    padding: 0 5%;
+  }
 `;
 
 export const ModalContent = styled(motion.div)`
@@ -23,6 +30,12 @@ export const ModalContent = styled(motion.div)`
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   overflow: hidden;
+  width: 80%;
+  margin: 3rem auto;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 export const ModalHeader = styled.div<ModalHeaderProps>`
