@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import Card from '../../components/card';
 import Quizze from '../../components/quizze';
-import { QuizzesContainer } from '../../styles/Containers';
+import FilterCard from '../../nodes/filter_card';
+import { LeftCardsContainer, QuizzesContainer } from '../../styles/Containers';
 
 const Index: React.FC = () => {
   const container = {
@@ -19,6 +20,11 @@ const Index: React.FC = () => {
   };
 
   return (
+    <>
+    <LeftCardsContainer>
+      <FilterCard/>
+    </LeftCardsContainer>
+    
     <Card cardTitle='Quizzes disponíveis'>
       <QuizzesContainer
         variants={container}
@@ -29,6 +35,7 @@ const Index: React.FC = () => {
           [0, 1, 2, 3, 4].map(number =>
             <motion.div key={number} variants={quizze}>
               <Quizze
+                id={`${number}`}
                 title='O quanto você sabe sobre programação?'
                 description='In code we trust!'
                 imageUrl='http://getwallpapers.com/wallpaper/full/1/c/f/145265.jpg'
@@ -38,6 +45,7 @@ const Index: React.FC = () => {
         }
       </QuizzesContainer>
     </Card>
+    </>
   );
 }
 

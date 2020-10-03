@@ -4,15 +4,14 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import './styles/FontImport.css';
 import GlobalStyle from './styles/GlobalStyle';
 import Index from './pages/Index';
-import { AppContainer, LeftCardsContainer } from './styles/Containers';
-import FilterCard from './nodes/filter_card';
+import { AppContainer } from './styles/Containers';
 import { ModalHandles } from './components/modal';
 import SignInUpModal from './modals/signinup_modal';
 import CreateQuizzeModal from './modals/create_quizze_modal';
 import AppNavbar from './nodes/app_navbar';
 import UserContext, { User } from './UserContext';
-import GoToHomeCard from './nodes/go_to_home_card';
 import MeusQuizzes from './pages/MeusQuizzes';
+import QuizzePage from './pages/QuizzePage';
 
 function App() {
   const modalRef = useRef<ModalHandles>(null);
@@ -31,15 +30,10 @@ function App() {
         <AppNavbar modalRef={modalRef}/>
 
         <AppContainer>
-          <LeftCardsContainer>
-            <FilterCard/>
-            <GoToHomeCard/>
-          </LeftCardsContainer>
-
           <Route path='/' exact={true} component={Index} />
-          <Route path='/meusquizzes' exact={true} component={MeusQuizzes} />
+          <Route path='/meusquizzes' component={MeusQuizzes} />
+          <Route path='/quizze/:id?' component={QuizzePage} />
         </AppContainer>
-
       </BrowserRouter>
 
       {

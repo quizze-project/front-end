@@ -65,6 +65,10 @@ export default createGlobalStyle`
         font-size: 1.2rem;
     }
 
+    a {
+        text-decoration: none;
+    }
+
     .white {
         color: white;
     }
@@ -137,6 +141,11 @@ export default createGlobalStyle`
     .center-align {
         display: flex;
         align-items: center;
+    }
+
+    .justify-between {
+        display: flex;
+        justify-content: space-between;
     }
 
     .form-group {

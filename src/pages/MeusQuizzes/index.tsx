@@ -3,7 +3,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Card from '../../components/card';
 import Quizze from '../../components/quizze';
-import { QuizzesContainer } from '../../styles/Containers';
+import { LeftCardsContainer, QuizzesContainer } from '../../styles/Containers';
+import GoToHomeCard from '../../nodes/go_to_home_card';
 
 const MeusQuizzes: React.FC = () => {
   const container = {
@@ -19,7 +20,11 @@ const MeusQuizzes: React.FC = () => {
     visible: { scale: 1, opacity: 1 }
   };
 
-  return (
+  return (<>
+    <LeftCardsContainer>
+      <GoToHomeCard/>
+    </LeftCardsContainer>
+
     <Card cardTitle='Seus quizzes'>
       <QuizzesContainer
         variants={container}
@@ -30,6 +35,7 @@ const MeusQuizzes: React.FC = () => {
           [0, 1].map(number =>
             <motion.div key={number} variants={quizze}>
               <Quizze
+                id={`${number}`}
                 title='O quanto você sabe sobre programação?'
                 description='In code we trust!'
                 imageUrl='http://getwallpapers.com/wallpaper/full/1/c/f/145265.jpg'
@@ -40,7 +46,7 @@ const MeusQuizzes: React.FC = () => {
         }
       </QuizzesContainer>
     </Card>
-  );
+  </>);
 }
 
 export default MeusQuizzes;

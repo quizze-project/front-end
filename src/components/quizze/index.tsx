@@ -1,18 +1,22 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { 
   QuizzeContainer, QuizzeDescription, QuizzeImage, QuizzeInformation, QuizzeOptions, QuizzeTitle 
 } from './style';
 
 interface QuizzeProps {
+  id: string;
   title: string;
   description: string;
   imageUrl: string;
   owner?: boolean;
 }
 
-const Quizze: React.FC<QuizzeProps> = ({ title, description, imageUrl, owner }) => {
+const Quizze: React.FC<QuizzeProps> = ({ id, title, description, imageUrl, owner }) => {
+  const history = useHistory();
+
   return (
-    <QuizzeContainer>
+    <QuizzeContainer onClick={() => history.push(`/quizze/${id}`)}>
       <QuizzeImage imageUrl={imageUrl}></QuizzeImage>
       <QuizzeInformation>
         <QuizzeTitle>{title}</QuizzeTitle>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ModalHandles } from '../../components/modal';
 import Navbar from '../../components/nav';
 import UserContext from '../../UserContext';
@@ -10,6 +10,7 @@ interface Props {
 
 const AppNavbar: React.FC<Props> = ({ modalRef }) => {
   const userContext = useContext(UserContext);
+  const history = useHistory();
 
   return (
     <Navbar>
@@ -27,7 +28,10 @@ const AppNavbar: React.FC<Props> = ({ modalRef }) => {
             Meus Quizzes
           </Link>
           <button style={{ marginLeft: '10px' }} className="btn bg-red" 
-            onClick={() => userContext.logout()}
+            onClick={() => {
+                userContext.logout();
+                history.push('/');
+            }}
           >
             Desconectar
           </button>
