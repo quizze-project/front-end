@@ -23,7 +23,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, text }) => {
   return (
     <div className='center-align'>
       <CheckBoxContainer>
-        <CheckBoxInput name={name} id={name} checked={checkChecked}
+        <CheckBoxInput name={name} id={name} defaultChecked={checkChecked}
           onChange={handleCheckChange}
         />
         <CheckBoxFakeLabel htmlFor={name}/>

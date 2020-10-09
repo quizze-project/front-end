@@ -21,13 +21,13 @@ const Modal: React.ForwardRefRenderFunction<ModalHandles, ModalProps> = (
     setVisible(true);
   }, []);
 
-  const handleClose = useCallback(() => {
+  const close = useCallback(() => {
     document.body.style.overflowY = '';
     setVisible(false);
   }, []);
 
   useImperativeHandle(ref, () => {
-    return { open };
+    return { open, close };
   });
 
   if(!visible) {
@@ -35,7 +35,7 @@ const Modal: React.ForwardRefRenderFunction<ModalHandles, ModalProps> = (
   }
 
   return (
-    <ModalContainer onClick={handleClose}>
+    <ModalContainer onClick={close}>
       <ModalContent
         onClick={(e) => e.stopPropagation()}
         variants={{

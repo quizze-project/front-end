@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { 
   QuizzeContainer, QuizzeDescription, QuizzeImage, QuizzeInformation, QuizzeOptions, QuizzeTitle 
 } from './style';
@@ -25,7 +25,14 @@ const Quizze: React.FC<QuizzeProps> = ({ id, title, description, imageUrl, owner
       {
         owner ? (
           <QuizzeOptions>
-            <button style={{ margin: '0 5px 5px 0' }} className="btn bg-green block">Editar</button>
+            <Link 
+              style={{ margin: '0 5px 5px 0' }}
+              className="btn bg-green block"
+              to={`/edit/${id}`}
+              onClick={e => e.stopPropagation()}
+            >
+              Editar
+            </Link>
             <button style={{ margin: '0 0 5px 0' }} className="btn bg-red block">Deletar</button>
           </QuizzeOptions>
         ) : null

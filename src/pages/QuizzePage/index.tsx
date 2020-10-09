@@ -1,50 +1,33 @@
-import React, { useState } from 'react';
+import React, { useCallback, useReducer, useState } from 'react';
 
 import Card from '../../components/card';
 import { LeftCardsContainer } from '../../styles/Containers';
 import GoToHomeCard from '../../nodes/go_to_home_card'
 import { Redirect, useParams } from 'react-router-dom';
 import { Answer, AnswerList } from './style';
+import QuizzeReducer from '../../reducers/quizze_reducer';
+import { doSelectAnswer } from '../../reducers/quizze_reducer/actions';
+
+const FakeQuizze = require('../../FakeQuizze.json');
 
 interface QuizzeParams {
   id: string | undefined;
 }
 
-interface Question {
-  question: string;
-  answers: string[];
-}
-
-interface Quizze {
-  name: string;
-  description: string;
-  image: string;
-  questions: Question[];
-}
-
 const QuizzePage: React.FC = () => {
   const { id } = useParams<QuizzeParams>();
-  const [ quizzeInfo, setQuizzeInfo ] = useState<Quizze>({
-    name: 'O quanto você sabe sobre programação?',
-    description: 'In code we trust',
-    image: 'http://getwallpapers.com/wallpaper/full/1/c/f/145265.jpg',
-    questions: [
-      {
-        question: 'Qual linguagem usa "public static void main"?',
-        answers: ['Java', 'Kotlin', 'Python', 'C']
-      },
-      {
-        question: 'Qual linguagem surgiu recentemente para competir com o Java?',
-        answers: ['Cobol', 'Fortran', 'Kotlin', 'Assembly']
-      },
-      {
-        question: 'Quem é o mestre da programação?',
-        answers: ['Linus Torwalds', 'Bill Gates', 'Ian Guimarães', 'Chris']
-      },
-    ]
-  });
-
+  const [ quizze, dispatch ] = useReducer(QuizzeReducer, FakeQuizze);
   const [ currentQuestion, setCurrentQuestion ] = useState(0);
+
+  const handleSelect = useCallback((questionId: number, answerId: number) => {
+    if(quizze) {
+      dispatch(doSelectAnswer(questionId, answerId));
+    }
+  }, [quizze]);
+
+  const handleSubmit = useCallback(() => {
+    
+  }, []);
 
   if(!id) {
     return (
@@ -52,27 +35,46 @@ const QuizzePage: React.FC = () => {
     );
   }
 
+  if(!quizze) {
+    return (<>
+      <LeftCardsContainer>
+        <GoToHomeCard/>
+      </LeftCardsContainer>
+
+      <Card style={{ flex: '1' }} cardSubtitle='Carregando...'/>
+    </>);
+  }
+
   return (<>
     <LeftCardsContainer>
       <Card
-        style={{ marginBottom: '10px' }}
-        cardTitle={quizzeInfo.name}
-        cardSubtitle={quizzeInfo.description}
-        cardHeaderImage={quizzeInfo.image}
+        style={{ marginBottom: '10px', overflow: 'hidden' }}
+        cardTitle={quizze.name}
+        cardSubtitle={quizze.description}
+        cardHeaderImage={quizze.image}
       />
       <GoToHomeCard/>
     </LeftCardsContainer>
 
     <Card
       style={{ flex: '1' }}
-      cardTitle={quizzeInfo.questions[currentQuestion].question}
-      cardSubtitle={`Pergunta ${currentQuestion + 1} de ${quizzeInfo.questions.length}`}
+      cardTitle={quizze.questions[currentQuestion].statement}
+      cardSubtitle={`Pergunta ${currentQuestion + 1} de ${quizze.questions.length}`}
     >
       <AnswerList>
         {
-          quizzeInfo.questions[currentQuestion].answers.map(answer => {
-          return (<Answer key={answer}>{answer}</Answer>);
-          })
+          quizze.questions[currentQuestion].answers.map(answer => (
+            <Answer
+              key={answer.id}
+              onClick={
+                quizze.questions[currentQuestion].checkedAnswer === answer.id ? undefined :
+                () => handleSelect(quizze.questions[currentQuestion].id, answer.id)
+              } 
+              checked={quizze.questions[currentQuestion].checkedAnswer === answer.id}
+            >
+              {answer.answer}
+            </Answer>
+          ))
         }
       </AnswerList>
       <div className="justify-between">
@@ -89,7 +91,7 @@ const QuizzePage: React.FC = () => {
           )
         }
         {
-          currentQuestion !== quizzeInfo.questions.length - 1 ? (
+          currentQuestion !== quizze.questions.length - 1 ? (
             <button
               className="btn bg-green" 
               onClick={() => setCurrentQuestion(currentQuestion + 1)}
@@ -98,7 +100,8 @@ const QuizzePage: React.FC = () => {
             </button>
           ) : (
             <button
-              className="btn bg-black" 
+              className="btn bg-green" 
+              onClick={handleSubmit}
             >
               Enviar resposta
             </button>

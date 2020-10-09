@@ -143,6 +143,11 @@ export default createGlobalStyle`
         align-items: center;
     }
 
+    .right-align {
+        display: flex;
+        justify-content: flex-end;
+    }
+
     .justify-between {
         display: flex;
         justify-content: space-between;
@@ -154,5 +159,36 @@ export default createGlobalStyle`
 
     .form-group label {
         font-weight: 600;
+    }
+
+    [tooltip-text] {
+        position: relative;
+    }
+
+    [tooltip-text]::after {
+        content: attr(tooltip-text);
+        position: absolute;
+        text-align: center;
+        font-size: 0.8rem;
+        font-weight: 400;
+        word-wrap: break-word;
+        color: white;
+        top: -10%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-100%);
+        background-color: rgba(23, 8, 23, 0.7);
+        padding: 4px 16px;
+        border-radius: 4px;
+        max-width: 150px;
+        width: max-content;
+        opacity: 0;
+        visibility: hidden;
+        transition: all .5s ease;
+        pointer-events: none;
+    }
+
+    [tooltip-text]:hover::after {
+        opacity: 1;
+        visibility: visible;
     }
 `;

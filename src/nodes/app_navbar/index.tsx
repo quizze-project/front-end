@@ -1,20 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+
+import CreateQuizzeModal from '../../modals/create_quizze_modal';
+import SignInUpModal from '../../modals/signinup_modal';
 import { ModalHandles } from '../../components/modal';
 import Navbar from '../../components/nav';
-import UserContext from '../../UserContext';
+import { doLogout } from '../../store/actions/UserActions';
+import { User } from '../../store/reducers/UserReducer';
 
-interface Props {
-  modalRef: React.RefObject<ModalHandles>
-}
-
-const AppNavbar: React.FC<Props> = ({ modalRef }) => {
-  const userContext = useContext(UserContext);
+const AppNavbar: React.FC = () => {
+  const { id, name } = useSelector<User, User>(state => state);
+  const dispatch = useDispatch();
   const history = useHistory();
+  const modalRef = useRef<ModalHandles>(null);
 
-  return (
+  return (<>
     <Navbar>
-      <h1 className="white">Olá, { userContext.user ? userContext.user.name : 'visitante' }!</h1>
+      <h1 className="white">Olá, { id ? name : 'visitante' }!</h1>
       <div>
       <button className="btn bg-light-purple" 
         onClick={() => modalRef.current?.open()}
@@ -22,14 +25,14 @@ const AppNavbar: React.FC<Props> = ({ modalRef }) => {
         Criar um quizze!
       </button>
       {
-        userContext.user ?
+        id ?
         (<>
           <Link to="/meusquizzes" style={{ marginLeft: '10px', flex: 1 }} className="btn bg-light-purple">
             Meus Quizzes
           </Link>
           <button style={{ marginLeft: '10px' }} className="btn bg-red" 
             onClick={() => {
-                userContext.logout();
+                dispatch(doLogout());
                 history.push('/');
             }}
           >
@@ -39,7 +42,12 @@ const AppNavbar: React.FC<Props> = ({ modalRef }) => {
       }
       </div>
     </Navbar>
-  );
+    {
+      id ? 
+      <CreateQuizzeModal ref={modalRef}/> :
+      <SignInUpModal ref={modalRef}/>
+    }
+  </>);
 }
 
 export default AppNavbar;

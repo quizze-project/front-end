@@ -8,11 +8,11 @@ export const CardContainer = styled.div`
   border-radius: 8px;
   background-color: white;
   box-shadow: 0px 10px 30px -15px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
 `;
 
 export const CardHeader = styled.div<CardHeaderProps>`
   padding: 16px 1.5rem;
+  overflow: hidden;
 
   ${props => props.backgroundImage && css`
     background: url(${props.backgroundImage}) center/cover no-repeat;
