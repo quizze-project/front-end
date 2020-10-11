@@ -11,17 +11,20 @@ import MeusQuizzes from './pages/MeusQuizzes';
 import QuizzePage from './pages/QuizzePage';
 import EditPage from './pages/EditPage';
 import ProtectedRoute from './components/protectedroute';
-import store from './store';
+import UserStore from './store/UserStore';
+import SearchStore from './store/SearchStore';
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider store={UserStore}>
       <BrowserRouter>
         <AppNavbar/>
 
         <AppContainer>
           <Switch>
-            <Route path='/' exact={true} component={Index} />
+            <Provider store={SearchStore}>
+              <Route path='/' exact={true} component={Index} />
+            </Provider>
             <Route path='/quizze/:id?' component={QuizzePage} />
             <ProtectedRoute path='/meusquizzes' component={MeusQuizzes} />
             <ProtectedRoute path='/edit/:id?' component={EditPage} />

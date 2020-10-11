@@ -10,7 +10,7 @@ import { doLogout } from '../../store/actions/UserActions';
 import { User } from '../../store/reducers/UserReducer';
 
 const AppNavbar: React.FC = () => {
-  const { id, name } = useSelector<User, User>(state => state);
+  const { id, name } = useSelector<any, User>(state => state);
   const dispatch = useDispatch();
   const history = useHistory();
   const modalRef = useRef<ModalHandles>(null);

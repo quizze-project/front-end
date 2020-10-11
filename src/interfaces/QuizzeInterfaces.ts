@@ -11,6 +11,7 @@ export interface QuestionInterface {
 }
 
 export interface QuizzeInterface {
+  id: number;
   name: string;
   description: string;
   image: string;

@@ -43,6 +43,10 @@ const EditPage: React.FC = () => {
   return (<>
     <LeftCardsContainer>
       <GoToHomeCard/>
+      <Card>
+        <button style={{ marginBottom: '10px' }} className="btn bg-red block">Apagar quizze</button>
+        <button className="btn bg-green block">Salvar</button>
+      </Card>
     </LeftCardsContainer>
 
     <div style={{ flex: '1' }}>
@@ -67,10 +71,6 @@ const EditPage: React.FC = () => {
             required
           />
         </div>
-        <div className="right-align">
-          <button style={{ marginRight: '10px' }} className="btn bg-red">Apagar quizze</button>
-          <input type="submit" className="btn bg-green" value="Salvar"/>
-        </div>
       </Card>
 
       <Card cardTitle="Perguntas">
@@ -87,6 +87,7 @@ const EditPage: React.FC = () => {
                     defaultValue={question.statement}
                     style={{ marginBottom: '10px' }}
                     ref={editingRef}
+                    autoFocus
                   />
                 ) : (
                   <QuestionName>{question.statement}</QuestionName>
@@ -108,7 +109,7 @@ const EditPage: React.FC = () => {
                       >
                         <input type="text" style={{ flex: '1' }}
                             className="custominput" defaultValue={answer.answer}
-                            ref={editingRef}
+                            ref={editingRef} autoFocus
                         />
                         <AnswerOptions>
                           <div tooltip-text="Cancelar" onClick={e => {
@@ -180,11 +181,21 @@ const EditPage: React.FC = () => {
                       }>
                         <FiEdit size={20} cursor='pointer' color='var(--purple)'/>
                       </div>
-                      <div tooltip-text="Adicionar resposta" onClick={() => 
-                        dispatch(doAddAnswer(question.id))
-                      }>
-                        <FiPlus size={20} cursor='pointer' color='var(--green)'/>
-                      </div>
+                      {
+                        question.answers.length === 5 ? (
+                          <div tooltip-text="Seu quizze atingiu o limite de 5 respostas">
+                            <FiPlus size={20} cursor='pointer' color='var(--green)' 
+                              style={{ opacity: 0.5 }}
+                            />
+                          </div>
+                        ) : (
+                          <div tooltip-text="Adicionar resposta" onClick={() => 
+                            dispatch(doAddAnswer(question.id))
+                          }>
+                            <FiPlus size={20} cursor='pointer' color='var(--green)'/>
+                          </div>
+                        )
+                      }
                     </>)
                   }
                 </QuestionOptions>
@@ -193,9 +204,19 @@ const EditPage: React.FC = () => {
           ))
         }
         <div className="right-align">
-          <button className="btn bg-green" onClick={() => dispatch(doAddQuestion())}>
-            Adicionar pergunta
-          </button>
+          {
+            quizze.questions.length === 20 ? (
+              <button className="btn bg-green" style={{ opacity: 0.5 }}
+                tooltip-text='Seu Quizze atingiu o limite de 20 perguntas!'
+              >
+                Adicionar pergunta
+              </button>
+            ) : (
+              <button className="btn bg-green" onClick={() => dispatch(doAddQuestion())}>
+                Adicionar pergunta
+              </button>
+            )
+          }
         </div>
       </Card>
     </div>

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "O quanto você sabe sobre programação?",
+    "description": "In code we trust",
+    "image": "http://getwallpapers.com/wallpaper/full/1/c/f/145265.jpg",
+    "questionsAmount": 5,
+    "registrationRequired": true
+  },
+  {
+    "id": 2,
+    "title": "História do Brasil",
+    "description": "Quão brasileiro você é?",
+    "image": "http://getwallpapers.com/wallpaper/full/1/c/f/145265.jpg",
+    "questionsAmount": 2,
+    "registrationRequired": false
+  },
+  {
+    "id": 3,
+    "title": "Ian cursos",
+    "description": "Você é mesmo aluno do Ian Microcefalia?",
+    "image": "http://getwallpapers.com/wallpaper/full/1/c/f/145265.jpg",
+    "questionsAmount": 10,
+    "registrationRequired": false
+  }
+]

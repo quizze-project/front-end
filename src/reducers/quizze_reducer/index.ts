@@ -27,7 +27,7 @@ const QuizzeReducer = (
         editingAnswer: editing ? answerId : undefined,
         questions: editing ? quizze.questions : quizze.questions.map(q => {
           if(q.id === questionId) {
-            q.answers = q.answers.filter(a => a.id !== -1);
+            q.answers = q.answers.filter(a => a.id !== 0);
           }
           return q;
         })
@@ -36,10 +36,10 @@ const QuizzeReducer = (
       return {
         ...quizze,
         editingQuestion: undefined,
-        editingAnswer: -1,
+        editingAnswer: 0,
         questions: quizze.questions.map(q => {
           if(q.id === questionId)
-            q.answers = [ ...q.answers.filter(a => a.id !== -1), { id: -1, answer: "" } ];
+            q.answers = [ ...q.answers.filter(a => a.id !== 0), { id: 0, answer: "" } ];
 
           return q;
         })
@@ -50,14 +50,16 @@ const QuizzeReducer = (
       if((answer as string).trim().length === 0)
         return quizze;
       
-      return { 
+      return {
         ...quizze,
         editingAnswer: undefined,
         questions: quizze.questions.map(q => {
           if(q.id === questionId) {
             q.answers = q.answers.map(a => {
-              if(a.id === answerId)
+              if(a.id === answerId) {
+                if(answerId === 0) a.id = q.answers.length * -1;
                 a.answer = answer;
+              }
 
               return a;
             });
@@ -70,12 +72,12 @@ const QuizzeReducer = (
         ...quizze,
         editingQuestion: editing ? questionId : undefined,
         editingAnswer: undefined,
-        questions: questionId === -1 ? quizze.questions.filter(q => q.id !== -1) : quizze.questions
+        questions: questionId === 0 ? quizze.questions.filter(q => q.id !== 0) : quizze.questions
       };
     case "ADDQUESTION":
-      return { ...quizze, editingQuestion: -1, questions: [ 
-        ...quizze.questions.filter(q => q.id !== -1),
-        { id: -1, statement: "", answers: [] }
+      return { ...quizze, editingQuestion: 0, questions: [ 
+        ...quizze.questions.filter(q => q.id !== 0),
+        { id: 0, statement: "", answers: [] }
       ]};
     case "DELETEQUESTION":
       return { 
@@ -94,7 +96,7 @@ const QuizzeReducer = (
         editingQuestion: undefined,
         questions: quizze.questions.map(q => {
           if(q.id === questionId) {
-            if(q.id === -1) q.id = quizze.questions.length * -1;
+            if(q.id === 0) q.id = quizze.questions.length * -1;
             q.statement = statement;
           }
           return q;
